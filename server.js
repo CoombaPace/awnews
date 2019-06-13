@@ -43,28 +43,34 @@ app.delete("/articles/:id", function(req, res) {
 // A GET route for scraping Antiwar.com
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.antiwar.com/").then(function(response) {
+  axios.get("http://original.antiwar.com/feed/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(response.data);
+    const $ = cheerio.load(response.data, {
+      normalizeWhitespace: true,
+      xmlMode: true
+    });
 
     // Now, we grab every td within an article tag, and do the following:
-    $("td").each(function(i, element) {
+    $("item").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
+      // Add the text, link, and description of every link, and save them as properties of the result object
       result.title = $(this)
-        .children("a")
+        .children("title")
         .text();
       result.link = $(this)
-        .children("a")
-        .attr("href");
+        .children("link")
+        // .attr("href");
+      result.summary = $(this)
+        .children("description")
+        .text();  
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
           // View the added result in the console
-          console.log(dbArticle);
+          console.log("this is article from server.js " + dbArticle);
         })
         .catch(function(err) {
           // If an error occurred, log it
@@ -74,8 +80,8 @@ app.get("/scrape", function(req, res) {
 
     // Send a message to the client
     res.send("Scrape Complete");
-    location.reload();
   });
+  // location.reload();
 });
 
 // Route for getting all Articles from the db

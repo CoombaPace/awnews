@@ -3,38 +3,39 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + 
+    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + data[i].summary +
     "<button class ='saveArt' data-id='" + data[i]._id + "'>" + "save article" + 
     "</button>" +
     "<button class ='notes' data-id='" + data[i]._id + "'>" + "add note" + 
     "</button>" + "<button class='deleteBtn' data-id='" + data[i]._id + "'>" + 
-    "delete" + "</button>" + "<br />" + data[i].link + "</p>");
+    "delete" + "</button>" + "<br />" + "<button class='linkBtn' data-id='" + data[i].link + "'>" + 
+    "read" + "</button>" + "</p>");
   }
 });
 
 $(document).on("click", ".scrape", function (e) {
   e.preventDefault();
-  $("#articles").empty();
 
   var thisId = $(this).attr("data-id");
   $.ajax({
     method: "GET",
     url: "/scrape/"
   }).then();
-  console.log(thisId);
+  console.log("This ID: " + thisId);
   $.getJSON("/articles", function(data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
       // Display the apropos information on the page
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + 
+      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].summary +
       "<button class ='saveArt' data-id='" + data[i]._id + "'>" + "save article" + 
-      "</button>" +
-      "<button class ='notes' data-id='" + data[i]._id + "'>" + "add note" + 
+      "</button>" + "</br>" +
+      "<p>" + "<button class ='notes' data-id='" + data[i]._id + "'>" + "add note" + 
       "</button>" + "<button class='deleteBtn' data-id='" + data[i]._id + "'>" + 
       "delete" + "</button>" + "<br />" + data[i].link + "</p>");
     }
+    location.reload();
   });
-  location.reload();
+  
   
 });
 
@@ -84,6 +85,11 @@ $(document).on("click", ".notes", function() {
         $("#bodyinput").val(data.note.body);
       }
     });
+});
+
+// When User clicks the read button:
+$(document).on("click", ".readBtn", function() {
+
 });
 
 // When you click the savenote button

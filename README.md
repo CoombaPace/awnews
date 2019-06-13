@@ -3,6 +3,12 @@
 
 # AntiWar.com Proto-Scraper
 
-### Will eventually be cleany deployed, this is only a mockup to play with functionality and layout.
+### How it Works
+Scrapes the XML feed from AntiWar.com and returns Title, Link, and and Summary information for each story.
+
+### To Do
+* Scrape article to page w/o inserting in DB.
+* Save button saves article to DB.
+* Trim incoming information (getting some extra redundant stuff).
 
 #### Built with Node.js, MongoDB, Mongoose, Cheerio, Axios, and More. 
