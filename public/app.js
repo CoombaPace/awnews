@@ -2,14 +2,22 @@
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + data[i].summary +
-    "<button class ='saveArt' data-id='" + data[i]._id + "'>" + "save article" + 
-    "</button>" +
-    "<button class ='notes' data-id='" + data[i]._id + "'>" + "add note" + 
-    "</button>" + "<button class='deleteBtn' data-id='" + data[i]._id + "'>" + 
-    "delete" + "</button>" + "<br />" + "<button class='linkBtn' data-id='" + data[i].link + "'>" + 
-    "read" + "</button>" + "</p>");
+    // Display the information on the page:
+    // Title:
+    $("#articles").append(
+    `<p data-id=${data[i]._id}><strong>${data[i].title}</strong></br> 
+    ${data[i].summary}</br>
+    <p>${data[i].link}</p>
+    <button class ='saveArt' data-id=${data[i]._id}>save article</button>
+    <button class ='notes' data-id=${data[i]._id}>add note</button> 
+    <button class='deleteBtn' data-id=${data[i]._id}>delete</button>`
+    // Code below is for a link button and for displaying the link...
+    // Not needed because the summary data includes a link to the article!
+    // for us. If that ever changes, a link data will need to be dispalyed. 
+    // + "<br />" + "<button class='linkBtn' data-id='" + data[i].link + "'>" + 
+    // "read" + "</button>" + "</p>"
+    // data[i].link
+    );
   }
 });
 
@@ -23,16 +31,18 @@ $(document).on("click", ".scrape", function (e) {
   }).then();
   console.log("This ID: " + thisId);
   $.getJSON("/articles", function(data) {
-    // For each one
-    for (var i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].summary +
-      "<button class ='saveArt' data-id='" + data[i]._id + "'>" + "save article" + 
-      "</button>" + "</br>" +
-      "<p>" + "<button class ='notes' data-id='" + data[i]._id + "'>" + "add note" + 
-      "</button>" + "<button class='deleteBtn' data-id='" + data[i]._id + "'>" + 
-      "delete" + "</button>" + "<br />" + data[i].link + "</p>");
-    }
+    // // For each one
+    // for (var i = 0; i < data.length; i++) {
+    //   // Display the apropos information on the page
+    //   $("#articles").append(`"<p data-id='" ${data[i]._id} + "'>" ${data[i].summary} +
+    //   "<button class ='saveArt' data-id='" ${data[i]._id} + "'>" + "save article" + 
+    //   "</button>" + "</br>" +
+    //   "<p>" + "<button class ='notes' data-id='" + ${data[i]._id} + "'>" + "add note" + 
+    //   "</button>" + "<button class='deleteBtn' data-id='" + ${data[i]._id} + "'>" + 
+    //   "delete" + "</button>" + "<br />" + ${data[i].link} + "</p>"`);
+    //     location.reload();
+
+    // }
     location.reload();
   });
   
@@ -50,6 +60,20 @@ $(document).on("click", ".deleteBtn", function (e) {
   }).then();
   console.log(thisId);
   location.reload();
+  
+});
+
+// When User clicks the delete all button.
+$(document).on("click", ".delAll", function (e) {
+  e.preventDefault();
+  
+  $.ajax({
+    method: "DELETE",
+    url: "/articles"
+  }).then();
+  $("#articles").empty();
+  location.reload();
+  
   
 });
 
@@ -85,11 +109,6 @@ $(document).on("click", ".notes", function() {
         $("#bodyinput").val(data.note.body);
       }
     });
-});
-
-// When User clicks the read button:
-$(document).on("click", ".readBtn", function() {
-
 });
 
 // When you click the savenote button

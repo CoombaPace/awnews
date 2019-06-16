@@ -1,6 +1,8 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var parseString = require("xml2js").parseString;
+
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -27,7 +29,16 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+var databaseUrl = "mongodb://localhost/unit18Populater";
+
+if (process.env.MONGODB_URI) {
+	mongoose.connect(process.env.MONGODB_URI);
+}
+else {
+	mongoose.connect(databaseUrl, { useNewUrlParser: true });
+};
+
+var summaryPs = [];
 
 // Routes
 
@@ -39,33 +50,46 @@ app.delete("/articles/:id", function(req, res) {
   });
 });
 
+// Delete all articles
+app.delete("/articles", function(req, res) {
+  db.Article.deleteMany({})
+  .then(function() {
+    res.json();
+  });
+});
+
 // When User clicks the scrape button.
 // A GET route for scraping Antiwar.com
 app.get("/scrape", function(req, res) {
-  // First, we grab the body of the html with axios
+
+  // First, we grab the body of the XML with axios
   axios.get("http://original.antiwar.com/feed/").then(function(response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
+    
+  // Then, we load that into cheerio and save it to $ for a shorthand selector
     const $ = cheerio.load(response.data, {
       normalizeWhitespace: true,
-      xmlMode: true
+      xmlMode: true,
     });
 
+      
     // Now, we grab every td within an article tag, and do the following:
     $("item").each(function(i, element) {
+
       // Save an empty result object
       var result = {};
-
+      
       // Add the text, link, and description of every link, and save them as properties of the result object
       result.title = $(this)
         .children("title")
         .text();
       result.link = $(this)
         .children("link")
-        // .attr("href");
       result.summary = $(this)
         .children("description")
-        .text();  
+        .text()
+        .replace(/<\/p>(.*?)<\/p>/, "");
 
+        
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -76,8 +100,9 @@ app.get("/scrape", function(req, res) {
           // If an error occurred, log it
           console.log(err);
         });
+        
     });
-
+    location.reload();
     // Send a message to the client
     res.send("Scrape Complete");
   });
