@@ -2,26 +2,45 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>Scraping With Mongoose</title>
+    <title>AntiWar Scraper</title>
     
   </head>
   <body>
-    <div id="wrapper">
-      <div class="header">
-        <img src="antiwar_logo.jpg" alt="">
-        <h1>AntiWar.com News Scraper</h1>
-        <h2><i>The News You Can Trust</i></h2>
+      <div class="jumbotron jumbotron-fluid" id="black">
+          <div class="card mb-3 mx-auto" id="black" style="max-width: 800px;">
+              <div class="row no-gutters" id="no-border">
+                <div class="col-md-4">
+                  <img src="antiwar_logo.jpg" class="card-img" alt="">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body-text">
+                    <h1 class="card-title">AntiWar.com News Scraper</h1>
+                    <h3 class="card-text"><i>The News You Can Trust</i></h3>
+                    <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
       </div>
-      <div id="articles">
-        <h2 id="articleHeader"><b>ARTICLES</b></h2>
-        <div class="scrape"> <button class="scrape">SCRAPE ARTICLES</button> <button class="delAll">REMOVE ALL ARTICLES</button> </div>
-
+      <div class="wrapper">
+          <div id="articles">
+            <h2 id="articleHeader"><b>ARTICLES</b></h2>
+            <div class="scrape"> <button class="btn btn-outline-secondary" id="scrape">Get Articles</button> 
+              <!-- <button class="delAll">REMOVE ALL ARTICLES</button>  -->
+            </div>
+      
+            </div>
+            <div id="notes">
+              <h2 id="noteHeader"><b>NOTES</b></h2>
+            </div>
+            
       </div>
-      <div id="notes">
-        <h2 id="noteHeader"><b>NOTES</b></h2>
-      </div>
-    </div>
+              
+            </div>
+        </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="app.js"></script>
   </body>
