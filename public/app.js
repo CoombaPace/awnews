@@ -60,20 +60,6 @@ $(document).on("click", "#deleteBtn", function (e) {
   
 });
 
-// When User clicks the delete all button.
-$(document).on("click", ".delAll", function (e) {
-  e.preventDefault();
-  
-  $.ajax({
-    method: "DELETE",
-    url: "/articles"
-  }).then();
-  $("#articles").empty();
-  location.reload();
-  
-  
-});
-
 // Whenever User clicks the add note button.
 $(document).on("click", "#notesBtn", function() {
   // Empty the notes from the note section
