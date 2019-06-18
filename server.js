@@ -5,7 +5,7 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-// var parseString = require("xml2js").parseString;
+
 // Require all models
 var db = require("./models");
 
@@ -47,7 +47,6 @@ else {
 	mongoose.connect(databaseUrl, { useNewUrlParser: true });
 };
 
-var summaryPs = [];
 
 /* ===========================================================================
                              ROUTES
