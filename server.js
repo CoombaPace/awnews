@@ -1,6 +1,7 @@
 /* ===========================================================================
                                DEPENDENCIES
    =========================================================================== */
+require('dotenv').config();
 
 var express = require("express");
 var logger = require("morgan");
@@ -20,7 +21,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
