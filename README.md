@@ -1,7 +1,9 @@
 ![alt text](https://dgxhtav2e25a8.cloudfront.net/antiwar_logo.gif "AntiWar.com Logo")
 
 
-# AntiWar.com Proto-Scraper
+# AntiWar.com Scraper
+
+#[Check it out!](https://awnews.herokuapp.com/)
 
 ### How it Works
 Scrapes the XML feed from AntiWar.com,
