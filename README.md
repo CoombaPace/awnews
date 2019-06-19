@@ -3,7 +3,7 @@
 
 # AntiWar.com Scraper
 
-#[Check it out!](https://awnews.herokuapp.com/)
+[Check it out!](https://awnews.herokuapp.com/)
 
 ### How it Works
 Scrapes the XML feed from AntiWar.com,
