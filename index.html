@@ -1,13 +1,29 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>AntiWar Scraper</title>
-    
-  </head>
+
   <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Mongo Scraper</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item active">
+                      <a class="nav-link" id="home" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="saved" href="/saved">Saved Articles</a>
+                  </li>
+                  <!-- <li class="nav-item">
+                      <a class="nav-link" id="scrape" href="#">Scrape New Articles</a>
+                  </li> -->
+                  <!-- <li class="nav-item">
+                      <a class="nav-link" id="clear" href="#">Clear Articles</a>
+                  </li> -->
+              </ul>
+          </div>
+      </nav>
+
       <div class="jumbotron jumbotron-fluid" id="black">
           <div class="card mb-3 mx-auto" id="black" style="max-width: 800px;">
               <div class="row no-gutters" id="no-border">
@@ -28,7 +44,7 @@
           <div id="articles">
             <h2 id="articleHeader"><b>ARTICLES</b></h2>
             <div class="scrape"> <button class="btn btn btn-success btn-lg" id="scrape">Get Articles</button> 
-              <!-- <button class="delAll">REMOVE ALL ARTICLES</button>  -->
+              <button class="clear">REMOVE ALL ARTICLES</button> 
             </div>
       
             </div>

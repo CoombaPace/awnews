@@ -1,0 +1,92 @@
+<body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Mongo Scraper</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item active">
+                      <a class="nav-link" id="home" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="saved" href="/saved">Saved Articles</a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+
+      <div class="jumbotron jumbotron-fluid" id="black">
+          <div class="card mb-3 mx-auto" id="black" style="max-width: 800px;">
+              <div class="row no-gutters" id="no-border">
+                <div class="col-md-4">
+                  <img src="antiwar_logo.jpg" class="card-img" alt="">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body-text">
+                    <h1 class="card-title">AntiWar.com News Scraper</h1>
+                    <h3 class="card-text"><i>The News You Can Trust</i></h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="wrapper">
+          <div id="articles">
+              
+                <h2 id="articleHeader"><b>ARTICLES</b></h2>
+                <div class="scrape">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn btn-success btn-lg" id="scrape">Get Articles</button> 
+                        <button class="btn btn btn-warning btn-lg" id="clear">Clear All</button>
+                    </div>
+                </div>
+            
+
+        <div id="cardholder">
+
+            {{#each articles}}
+            <div id="articlePadding" class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{{this.title}}</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{this.summary}}...</p>
+                    
+                    <p><a href={{this.link}}>Continue Reading</a></p>
+
+                    <div class="btn-group" role="group">
+                        <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save</a>
+                        <button type="button" class="btn btn-info" id="notesBtn" data-id={{this.id}}>Note</button>
+                        <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this.id}}>Remove</button>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+            
+            
+        </div>
+        
+        <div id="notes">
+            <h2 id="noteHeader"><b>NOTES</b></h2>
+        </div>
+            
+      </div>
+              
+            </div>
+        </div>
+    {{!-- <footer id="sticky-footer" class="py-2 bg-dark text-white-50 mt-4">
+    <div class="container text-center">
+        <small>Copyright &copy;</small>
+    </div>
+</footer> --}}
+    
+  </body>
+</html>
+
+
+
+
+

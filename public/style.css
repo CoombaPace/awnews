@@ -56,6 +56,7 @@
         align-items: center;
         justify-content: center;
       }
+
       #articles {
         display: inline-block;
         /* overflow: auto; */
@@ -63,6 +64,10 @@
         height: 700px;
         text-align: center;
         margin: 30px;
+      }
+
+      #articlePadding {
+        margin-top: 20px;
       }
 
       #articleTitle {

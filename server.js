@@ -6,6 +6,9 @@ require('dotenv').config();
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
+var s = require("underscore.string");
+
 
 // Require all models
 var db = require("./models");
@@ -48,10 +51,23 @@ else {
 	mongoose.connect(databaseUrl, { useNewUrlParser: true });
 };
 
-
+// Handlebars
+app.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main"
+  })
+);
+app.set("view engine", "handlebars");
 /* ===========================================================================
                              ROUTES
    =========================================================================== */
+   app.get("/", function (req, res) {
+    db.Article.find({ saved: false })
+    .then(function (dbArticle) {
+      res.render("index", { articles: dbArticle });
+    });
+  });
 
 // Delete an example by id
 app.delete("/articles/:id", function(req, res) {
@@ -62,12 +78,15 @@ app.delete("/articles/:id", function(req, res) {
 });
 
 // Delete all articles
-app.delete("/articles", function(req, res) {
-  db.Article.deleteMany({})
-  .then(function() {
-    res.json();
+app.delete('/articles', function (req, res) {
+  db.Article.remove({})
+  .then(function (articles) {
+    console.log("articles: " + articles)
+  }).catch(function (err) {
+    // If an error occurred, send it to the client
+    res.json(err);
   });
-});
+})
 
 // When User clicks the scrape button.
 // A GET route for scraping Antiwar.com
@@ -89,17 +108,25 @@ app.get("/scrape", function(req, res) {
       // Save an empty result object
       var result = {};
       
-      // Add the text, link, and description of every link, and save them as properties of the result object
+      // Add the text, link, and description of every article, and save them as properties of the result object
       result.title = $(this)
         .children("title")
         .text();
       result.link = $(this)
         .children("link")
+        .text()
+        .replace(/<link>/,'');
       result.summary = $(this)
         .children("description")
         .text()
-        .replace(/<\/p>(.*?)<\/p>/, "");
-
+        .replace(/<\/p>(.*?)<\/p>/, "")
+        .replace(/(<([^>]+)>)/ig,"")
+        // .split("&#").shift()
+        // .replace(/&#;(.*?)/, "")
+        .replace(/&#/g,'"')
+        // .replace(/\d/g, "");
+        .split("\"82").shift()
+      result.saved = false;
         
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
@@ -110,19 +137,16 @@ app.get("/scrape", function(req, res) {
         .catch(function(err) {
           // If an error occurred, log it
           console.log(err);
-        });
-        
+        });       
     });
-    location.reload();
-    // Send a message to the client
-    res.send("Scrape Complete");
+    res.redirect("/")
   });
+  // res.redirect("/");
   // location.reload();
 });
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
-  // TODO: Finish the route so it grabs all of the articles
   db.Article.find({})
     .then(function(dbArticle) {
       res.json(dbArticle);
@@ -134,11 +158,7 @@ app.get("/articles", function(req, res) {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
+  
   db.Article.findOne({_id: req.params.id })
   .populate("note")
     .then(function(dbArticle) {
@@ -148,6 +168,14 @@ app.get("/articles/:id", function(req, res) {
       res.json(err);
     })
 });
+
+// Route for saved articles
+app.get("/saved", function (req, res) {
+  db.Article.find({ saved: true }).then(function (dbArticles) {
+    // console.log("dbArticles: " + dbArticles[0].preview);
+    res.render("saved", { articles: dbArticles });
+  });
+})
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {

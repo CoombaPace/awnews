@@ -4,29 +4,30 @@
 
 // Grab the articles as a json
 
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
+// $.getJSON("/articles", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
     
-    $("#articles").append(
-    `
-    <div class="card" id="entry">
-    <p data-id=${data[i]._id}><h4 id="articleTitle">${data[i].title}</h4>
-    </br> 
-    <h5>${data[i].summary}</h5>
-    </br>
-    ${data[i].link}
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-outline-secondary" id="notesBtn" data-id=${data[i]._id}>Add Note</button>
-      <button type="button" class="btn btn-outline-secondary" id="deleteBtn" data-id=${data[i]._id}>Remove</button>
-    </div>
-    </div>
-    `
-    // Continue reading link comes in with result.summary data.
-    // We add a URL for the results that do not have a link included.
-    );
-  }
-});
+//     $("#articles").append(
+//     `
+//     <div class="card" id="entry">
+//     <p data-id=${data[i]._id}><h4 id="articleTitle">${data[i].title}</h4>
+//     </br> 
+//     <h5>${data[i].summary}</h5>
+//     </br>
+//     ${data[i].link}
+//     <div class="btn-group" role="group" aria-label="Basic example">
+//       <button type="button" class="btn btn-outline-secondary" id="notesBtn" data-id=${data[i]._id}>Add Note</button>
+//       <button type="button" class="btn btn-outline-secondary" id="deleteBtn" data-id=${data[i]._id}>Remove</button>
+
+//     </div>
+//     </div>
+//     `
+//     // Continue reading link comes in with result.summary data.
+//     // We add a URL for the results that do not have a link included.
+//     );
+//   }
+// });
 
 
 
@@ -37,13 +38,12 @@ $(document).on("click", "#scrape", function (e) {
   $.ajax({
     method: "GET",
     url: "/scrape/"
-  }).then();
-  console.log("This ID: " + thisId);
-  $.getJSON("/articles", function(data) {
-    location.reload();
+  }).then(function() {
+    $.getJSON("/articles", function(data) {
+      console.log("This ID: " + thisId);
+      location.reload();
+    });
   });
-  
-  
 });
 
 // When User clicks the delete button.
@@ -57,8 +57,27 @@ $(document).on("click", "#deleteBtn", function (e) {
   }).then();
   console.log(thisId);
   location.reload();
-  
 });
+
+// When User clicks delete all button:
+$(document).on("click", "#clear", function () {
+  // e.preventDefault();
+  $.ajax({
+    method: "GET",
+    url: "/articles"
+  }).then(function (data) {
+    // console.log("data: " + data);
+    console.log("data: " + JSON.stringify(data));
+
+    $.ajax({
+      method: "DELETE",
+      url: "/articles"
+    })
+    console.log("posted")
+    location.reload();
+  });
+})
+
 
 // Whenever User clicks the add note button.
 $(document).on("click", "#notesBtn", function() {
