@@ -30,7 +30,7 @@
 // });
 
 
-
+/* ========== When User clicks Get Articles Button ========== */
 $(document).on("click", "#scrape", function (e) {
   e.preventDefault();
 
@@ -46,7 +46,7 @@ $(document).on("click", "#scrape", function (e) {
   });
 });
 
-// When User clicks the delete button.
+/* ========== When User clicks Remove Button ========== */
 $(document).on("click", "#deleteBtn", function (e) {
   e.preventDefault();
   
@@ -59,7 +59,7 @@ $(document).on("click", "#deleteBtn", function (e) {
   location.reload();
 });
 
-// When User clicks delete all button:
+/* ========== When User clicks Clear All Button ========== */
 $(document).on("click", "#clear", function () {
   // e.preventDefault();
   $.ajax({
@@ -76,6 +76,34 @@ $(document).on("click", "#clear", function () {
     console.log("posted")
     location.reload();
   });
+})
+
+/* ========== When User clicks Save Button ========== */
+$(document).on("click", "#save-article", function () {
+  var thisId = $(this).attr("data-id");
+  console.log("this = " + JSON.stringify($(this)))
+  console.log("thisId = " + thisId)
+  // Now make an ajax call for the Article
+  $.ajax({
+    method: "GET",
+    url: "/articles/" + thisId
+  })
+    // With that done, add the note information to the page
+    .then(function (data) {
+      console.log("data: " + JSON.stringify(data));
+      $.ajax({
+        method: "POST",
+        url: "/articles/" + thisId,
+        data: {
+          // title: data.title,
+          saved: true
+        }
+      })
+      console.log("data: " + JSON.stringify(data));
+
+      console.log("posted")
+      // location.reload();
+    });
 })
 
 

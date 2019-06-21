@@ -1,6 +1,6 @@
 <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Mongo Scraper</a>
+          <a class="navbar-brand" href="#">Anti-War News Scraper</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -36,11 +36,13 @@
           <div id="articles">
               
                 <h2 id="articleHeader"><b>ARTICLES</b></h2>
-            <span id="buttons"></span>
-                <div class="scrape"> <button class="btn btn btn-success btn-lg" id="scrape">Get Articles</button> 
-                <button class="btn btn btn-warning btn-lg" id="clear">Clear All</button>
-              </span>
-         </div>
+                <div class="scrape">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn btn-success btn-lg" id="scrape">Get Articles</button> 
+                        <button class="btn btn btn-warning btn-lg" id="clear">Clear All</button>
+                    </div>
+                </div>
+            
 
         <div id="cardholder">
 
@@ -50,13 +52,15 @@
                     <h5 class="card-title">{{this.title}}</h5>
                 </div>
                 <div class="card-body">
-                    <p>{{this.summary}}</p>
+                    <p>{{this.summary}}...</p>
                     
-                    <p>{{this.link}}</p>
+                    <p><a href={{this.link}}>Continue Reading</a></p>
 
-                    <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save Article</a>
-                    <button type="button" class="btn btn-outline-info" id="notesBtn" data-id={{this.id}}>Add Note</button>
-                    <button type="button" class="btn btn-outline-danger" id="deleteBtn" data-id={{this.id}}>Remove</button>
+                    <div class="btn-group" role="group">
+                        <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save</a>
+                        <button type="button" class="btn btn-info" id="notesBtn" data-id={{this.id}}>Note</button>
+                        <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this.id}}>Remove</button>
+                    </div>
                 </div>
             </div>
             {{/each}}

@@ -9,4 +9,4 @@
 Scrapes the XML feed from AntiWar.com,
 inserts the stories into a Mongo Database, and returns Title, Link, and and Summary information for each story.
 
-#### Built with Node.js, MongoDB, Mongoose, Cheerio, and Axios. 
+#### Built with Node.js, MongoDB, Mongoose, Cheerio, Axios, Express, and Express Handlebars.

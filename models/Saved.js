@@ -15,9 +15,9 @@ var SavedSchema = new Schema({
     type: String,
     required: true
   },
-  preview: {
+  summary: {
     type: String,
-    // required: true
+    required: true
   },
   saved: {
     type: Boolean
