@@ -10,7 +10,7 @@
 
       #entry {
         box-shadow: 3px 3px 20px lightslategrey;
-    margin: 20px 0;
+        margin: 20px 0;
       }
 
       .header {
@@ -28,7 +28,6 @@
 
       .right {
         float: right;
-        
         margin-bottom: 20px;
       }
 
@@ -58,12 +57,12 @@
       }
 
       #articles {
-        display: inline-block;
+        /* display: inline-block; */
         /* overflow: auto; */
         width: 60%;
         height: 700px;
         text-align: center;
-        margin: 30px;
+        margin: 0 auto;
       }
 
       #articlePadding {
@@ -74,9 +73,10 @@
         margin: 5px;
       }
       #notes {
-        float: right;
-        width: 20%;
-        margin: 40px;
+        /* float: right; */
+        width: 100%;
+        margin: 0 auto;
+        /* margin: 40px; */
       }
 
       /* POPUP */
@@ -143,6 +143,6 @@
         font-size: 24px;
       }
       textarea {
-        height: 200px;
+        height: 80px;
         font-size: 18px;
       }

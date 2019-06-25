@@ -62,11 +62,18 @@ app.set("view engine", "handlebars");
 /* ===========================================================================
                              ROUTES
    =========================================================================== */
-   
+   process.on("unhandledRejection", (error) => {
+    console.error(error); // This prints error with stack included (as for normal errors)
+    throw error; // Following best practices re-throw error and let the process exit with error code
+  });
+  
    app.get("/", function (req, res) {
     db.Article.find({ saved: false })
     .then(function (dbArticle) {
       res.render("index", { articles: dbArticle });
+    }).catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
     });
   });
 
@@ -75,6 +82,9 @@ app.delete("/articles/:id", function(req, res) {
   db.Article.remove({ _id: req.params.id })
   .then(function(dbArticle) {
     res.json(dbArticle);
+  }).catch(function (err) {
+    // If an error occurred, send it to the client
+    res.json(err);
   });
 });
 
@@ -138,6 +148,11 @@ app.get("/scrape", function(req, res) {
         .catch(function(err) {
           // If an error occurred, log it
           console.log(err);
+          process.on('unhandledRejection', (reason, promise) => {
+            console.log('Unhandled Rejection at:', reason.stack || reason)
+            // Recommended: send the information to sentry.io
+            // or whatever crash reporting service you use
+          })
         });       
     });
     res.redirect("/")
@@ -173,7 +188,9 @@ app.get("/saved", function (req, res) {
   db.Article.find({ saved: true })
   .then(function (dbArticle) {
     res.render("saved", { articles: dbArticle });
-  });
+  }).catch(function(err) {
+    res.json(err);
+  })
 })
 
 // Route for getting all Saved Articles from the db
