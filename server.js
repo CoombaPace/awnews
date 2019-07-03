@@ -150,7 +150,6 @@ app.get("/scrape", function(req, res) {
     });
     res.redirect("/")
   });
-});
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
