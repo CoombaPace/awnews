@@ -132,10 +132,7 @@ app.get("/scrape", function(req, res) {
         .text()
         .replace(/<\/p>(.*?)<\/p>/, "")
         .replace(/(<([^>]+)>)/ig,"")
-        // .split("&#").shift()
-        // .replace(/&#;(.*?)/, "")
         .replace(/&#/g,'"')
-        // .replace(/\d/g, "");
         .split("\"82").shift()
       result.saved = false;
         
@@ -148,10 +145,6 @@ app.get("/scrape", function(req, res) {
         .catch(function(err) {
           // If an error occurred, log it
           console.log(err);
-          process.on('unhandledRejection', (reason, promise) => {
-            console.log('Unhandled Rejection at:', reason.stack || reason)
-            // Recommended: send the information to sentry.io
-            // or whatever crash reporting service you use
           })
         });       
     });
