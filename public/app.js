@@ -61,26 +61,25 @@ $(document).on("click", "#save-article", function () {
     method: "GET",
     url: "/articles/" + thisId
   })
-    // With that done, add the note information to the page
+    // With that done, add the new saved status
     .then(function (data) {
       console.log("data: " + JSON.stringify(data));
       $.ajax({
         method: "POST",
-        url: "/articles/" + thisId,
+        url: "/saved/" + thisId,
         data: {
-          // title: data.title,
+          title: data.title,
           saved: true
         }
       })
       console.log("data: " + JSON.stringify(data));
 
       console.log("posted")
-      // location.reload();
     });
 })
 
 
-/* ========== Whenever User clicks the add note button ========== */
+/* ========== When User clicks the Note Button ========== */
 $(document).on("click", "#notesBtn", function() {
   // Empty the notes from the note section
   $("#notes").empty();
@@ -96,7 +95,7 @@ $(document).on("click", "#notesBtn", function() {
     .then(function(data) {
       console.log(data);
       // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notes").append("<textarea data-id='" + data._id + "' id='bodyinput' name='body' value='Write a note...'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
@@ -108,7 +107,7 @@ $(document).on("click", "#notesBtn", function() {
     });
 });
 
-/* ========== When you click the save note button ========== */
+/* ========== When you click the Save Note Button ========== */
 $(document).on("click", "#savenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
@@ -134,8 +133,6 @@ $(document).on("click", "#savenote", function() {
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
-}).catch(function(err) {
-  res.json(err);
 })
 
 

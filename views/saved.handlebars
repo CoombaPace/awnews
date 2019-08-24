@@ -44,45 +44,35 @@
                 </div>
             
 
-        <div id="cardholder">
+                <div id="cardholder">
 
-            {{#each articles}}
-            <div id="articlePadding" class="card">
-                <div class="card-header">
-                    <h5 class="card-title">{{this.title}}</h5>
-                </div>
-                <div class="card-body">
-                    <p>{{this.summary}}...</p>
-                    
-                    <p><a href={{this.link}}>Continue Reading</a></p>
+                    {{#each articles}}
+                    <div id="articlePadding" class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{this.title}}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>{{this.summary}}...</p>
+                            
+                            <p><a href={{this.link}}>Continue Reading</a></p>
 
-                    <div class="btn-group" role="group">
-                        <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save</a>
-                        <button type="button" class="btn btn-info" id="notesBtn" data-id={{this.id}}>Note</button>
-                        <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this.id}}>Remove</button>
+                            <div>
+                                <h2 id="noteHeader"><b>NOTES</b></h2>
+                                <div id="notes" data-id={{this.id}}></div>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save</a>
+                                <button type="button" class="btn btn-info" id="notesBtn" data-id={{this.id}}>Note</button>
+                                <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this.id}}>Remove</button>
+                            </div>
+                        </div>
                     </div>
+                    {{/each}}
+
                 </div>
             </div>
-            {{/each}}
-        </div>
-            
-            
-        </div>
-        
-        <div id="notes">
-            <h2 id="noteHeader"><b>NOTES</b></h2>
-        </div>
-            
       </div>
-              
-            </div>
-        </div>
-    {{!-- <footer id="sticky-footer" class="py-2 bg-dark text-white-50 mt-4">
-    <div class="container text-center">
-        <small>Copyright &copy;</small>
-    </div>
-</footer> --}}
-    
   </body>
 </html>
 
