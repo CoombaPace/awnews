@@ -33,6 +33,11 @@
             </div>
       </div>
       <div class="wrapper">
+          <div id="noteHolder">
+                <h2 id="noteHeader"><b>NOTES</b></h2>
+                <div id="notes"></div>
+          </div>
+                    
           <div id="articles">
               
                 <h2 id="articleHeader"><b>ARTICLES</b></h2>
@@ -55,13 +60,6 @@
                             <p>{{this.summary}}...</p>
                             
                             <p><a href={{this.link}}>Continue Reading</a></p>
-
-                            <div id="notes">
-                                <h2 id="noteHeader"><b>NOTES</b></h2>
-                                {{#each this.notes}}
-                                <p>{{this.notes}}</p>
-                                {{/each}}
-                            </div>
 
                             <div class="btn-group" role="group">
                                 <a href="#" id="save-article" class="btn btn-primary" data-id={{this.id}}>Save</a>
