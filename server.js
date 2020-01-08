@@ -92,7 +92,7 @@
    app.delete('/articles', function (req, res) {
      db.Article.remove({})
      .then(function (articles) {
-       console.log("articles: " + articles)
+       console.log("articles: " + articles);
      }).catch(function (err) {
        // If an error occurred, send it to the client
        res.json(err);
@@ -130,10 +130,7 @@
          result.summary = $(this)
            .children("description")
            .text()
-           .replace(/<\/p>(.*?)<\/p>/, "")
-           .replace(/(<([^>]+)>)/ig,"")
-           .replace(/&#/g,'"')
-           .split("\"82").shift()
+           .replace(/(\&(.*?)\;|<[^>]+>)/ig, "");
          result.saved = false;
            
          // Create a new Article using the `result` object built from scraping

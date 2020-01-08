@@ -2,7 +2,6 @@
                              FUNCTIONS & BUTTONS
    =========================================================================== */
 
-
 /* ========== When User clicks Get Articles Button ========== */
 $(document).on("click", "#scrape", function (e) {
   e.preventDefault();
@@ -14,7 +13,7 @@ $(document).on("click", "#scrape", function (e) {
   }).then(function() {
     $.getJSON("/articles", function(data) {
       console.log("This ID: " + thisId);
-      setInterval('location.reload()', 1000);
+      setInterval('location.reload()', 100);
     });
   })
 });
@@ -95,9 +94,9 @@ $(document).on("click", "#notesBtn", function() {
     .then(function(data) {
       console.log(data);
       // A textarea to add a new note body
-      $("#notes").append("<textarea data-id='" + data._id + "' id='bodyinput' name='body' value='Write a note...'></textarea>");
+      $("#notes").hide().append("<textarea data-id='" + data._id + "' id='bodyinput' name='body' value='Write a note...'></textarea>").fadeIn(800);
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes").hide().append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>").fadeIn(1000);
 
       // If there's a note in the article
       if (data.note) {
